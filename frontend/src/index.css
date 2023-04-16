@@ -41,3 +41,8 @@ nav > h2
 	font-size: 30px;
 	cursor: pointer;
 }
+
+img
+{
+    width: 75px;
+}

@@ -25,6 +25,7 @@ def getRoutes(request):
         {
             'Endpoint': '/images/create',
             'method': 'POST',
+            'body': {'image': ""},
             'description': 'Creates an image with data sent in a post request'
         },
         {

@@ -1,37 +1,44 @@
 import React from "react";
 import ImageUpload from "./ImageUpload";
+import ImageListDisplay from "./ImageListDisplay";
 
 function Predict()
 {
-    let [image, setImage] = React.useState(null)
+    let [uploadedImage, setUploadedImage] = React.useState(null)
 
-    let [imageList, setImageList] = React.useState([])
-    React.useEffect(() => {
-        getImages()
-    })
-
-
-    async function getImages()
+    function handleChange(event)
     {
-        await fetch('/api/images/')
-            .then(response => response.json())
-            .then(imageList => setImageList(imageList))
-            .catch(err => console.error(err))
+        setUploadedImage(function(uploadedImage) {
+            const {name, value} = event.target
+
+            return ({
+                ...uploadedImage,
+                [name]: value
+            })
+        })
     }
 
-    async function displayImage(pk)
+    async function createImage()
     {
-        await fetch('/api/images/' + String(pk) + '/image')
-            .then(response => response.json())
-            .then(imageList => setImageList(imageList))
-            .catch(err => console.error(err))
+        fetch(`/api/images/`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(uploadedImage)
+        })
     }
 
     return (
         <div>
             <h4>Upload a radiograph X-ray image of lungs to detect COVID-19.</h4>
-            <input type="file" />
-            <img src='http://127.0.0.1:8000/api/images/5/image'/>
+            <ImageUpload/>
+            <input type="file" onChange={handleChange}/>
+            <p>hey {JSON.stringify(uploadedImage)}</p>
+            <button onClick={createImage}>Predict</button>
+            <h4>Prediction History</h4>
+            <ImageListDisplay/>
         </div>
     )
 }
