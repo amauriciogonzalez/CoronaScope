@@ -9,32 +9,45 @@ function Predict()
     function handleChange(event)
     {
         setUploadedImage(function(uploadedImage) {
-            const {name, value} = event.target
-
-            return ({
-                ...uploadedImage,
-                [name]: value
-            })
+            return event.target.files[0]
         })
     }
 
     async function createImage()
     {
-        fetch(`/api/images/`, {
+        const formData = new FormData();
+        formData.append('uploadedImage', uploadedImage);
+
+        fetch(`/api/images/create`, {
             credentials: 'include',
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                //'X-CSRFToken': getCookie('csrftoken'),
             },
-            body: JSON.stringify(uploadedImage)
+            body: formData
         })
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
     }
+
+    function getCookie(name) {
+        const cookieValue = document.cookie
+          .split(';')
+          .map(cookie => cookie.trim())
+          .find(cookie => cookie.startsWith(name + '='));
+        if (cookieValue) {
+          return cookieValue.split('=')[1];
+        } else {
+          return null;
+        }
+      }
 
     return (
         <div>
             <h4>Upload a radiograph X-ray image of lungs to detect COVID-19.</h4>
             <ImageUpload/>
-            <input type="file" onChange={handleChange}/>
+            <input type="file" onChange={handleChange} name='image'/>
             <p>hey {JSON.stringify(uploadedImage)}</p>
             <button onClick={createImage}>Predict</button>
             <h4>Prediction History</h4>

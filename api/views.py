@@ -2,10 +2,12 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Image
-from .utils import getImageList, createImage, getImageUtil, updateImage, deleteImage
+#from .utils import getImageList, createImage, getImageUtil, updateImage, deleteImage
 from django.http import HttpResponse
 from django.conf import settings
 import os
+
+from .serializers import ImageSerializer
 
 # Create your views here.
 
@@ -25,7 +27,7 @@ def getRoutes(request):
         {
             'Endpoint': '/images/create',
             'method': 'POST',
-            'body': {'image': ""},
+            #'body': {'image': ""},
             'description': 'Creates an image with data sent in a post request'
         },
         {
@@ -42,22 +44,63 @@ def getRoutes(request):
     return Response(routes)
 
 
-@api_view(['GET', 'POST'])
-def getImages(request):
-    if request.method == 'GET':
-        return getImageList(request)
-    elif request.method == 'POST':
-        return createImage(request)
+# @api_view(['GET', 'POST'])
+# def getImages(request):
+#     if request.method == 'GET':
+#         return getImageList(request)
+#     elif request.method == 'POST':
+#         return createImage(request)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
+# @api_view(['GET', 'PUT', 'DELETE'])
+# def getImage(request, pk):
+#     if request.method == 'GET':
+#         return getImageUtil(request, pk)
+#     elif request.method == 'PUT':
+#         return updateImage(request, pk)
+#     elif request.method == 'DELETE':
+#         return deleteImage(request, pk)
+
+
+@api_view(['GET'])
+def getImageList(request):
+    images = Image.objects.all().order_by('-updated_date')
+    serializer = ImageSerializer(images, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 def getImage(request, pk):
-    if request.method == 'GET':
-        return getImageUtil(request, pk)
-    elif request.method == 'PUT':
-        return updateImage(request, pk)
-    elif request.method == 'DELETE':
-        return deleteImage(request, pk)
+    image = Image.objects.get(id=pk)
+    serializer = ImageSerializer(image, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def createImage(request):
+    data = request.data
+    image = Image.objects.create(
+        image=data['uploadedImage']
+    )
+    serializer = ImageSerializer(image, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['PUT'])
+def updateImage(request, pk):
+    data = request.data
+    image = Image.objects.get(id=pk)
+    serializer = ImageSerializer(instance=image, data=data)
+    if serializer.is_valid():
+        serializer.save()
+    return serializer.data
+
+
+@api_view(['DELETE'])
+def deleteImage(request, pk):
+    image = Image.objects.get(id=pk)
+    image.delete()
+    return Response('The image instance was deleted.')
 
 
 def displayImage(request, pk):
