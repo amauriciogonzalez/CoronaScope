@@ -11,7 +11,7 @@ function App()
             <Navbar/>
             <Routes>
                 <Route path='/' element={<Home/>} />
-                <Route path='/predict' element={<Predict/>} />
+                <Route path='/predict/' element={<Predict/>} />
             </Routes>
         </div>
     );

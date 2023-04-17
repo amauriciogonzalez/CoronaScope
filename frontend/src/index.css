@@ -42,7 +42,45 @@ nav > h2
 	cursor: pointer;
 }
 
+.predict-page
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 img
 {
     width: 75px;
+}
+
+.select-image
+{
+    margin: 40px 0px;
+}
+
+.upload-button
+{
+    position:absolute;
+    width:400px;
+    height:40px;
+    margin-top:-40px;
+    z-index:10;
+    opacity:0;
+}
+
+.overlay-layer
+{
+    width:400px;
+    height:40px;
+    margin-top:-40px;
+    opacity:0.5;
+    background-color:#000000;
+    z-index:0;
+    font-size:25px;
+    color:#FFFFFF;
+    text-align:center;
+    line-height:40px;
+    border-radius: 100px;
 }

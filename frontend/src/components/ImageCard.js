@@ -6,12 +6,13 @@ function ImageCard(props)
 
     async function deleteImage()
     {
-        fetch(domainName + '/api/images/' + props.image.id + '/delete', {
+        await fetch(domainName + '/api/images/' + props.image.id + '/delete', {
             method: 'DELETE',
-            'headers': {
-                'Content-Type': 'application/json'
-            }
         })
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
+
+        window.location.reload()
     }
 
     return (

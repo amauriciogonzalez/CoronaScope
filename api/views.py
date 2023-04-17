@@ -79,6 +79,7 @@ def getImage(request, pk):
 @api_view(['POST'])
 def createImage(request):
     data = request.data
+    print('HEY', data['uploadedImage'])
     image = Image.objects.create(
         image=data['uploadedImage']
     )
