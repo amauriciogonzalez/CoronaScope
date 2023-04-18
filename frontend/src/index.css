@@ -84,3 +84,38 @@ img
     line-height:40px;
     border-radius: 100px;
 }
+
+
+.prediction-history
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+    overflow-x: scroll;
+}
+
+.image-card
+{
+    background-color: blue;
+}
+
+.image-card > img
+{
+    width: 100px;
+    /* aspect-ratio: 9 / 9; */
+}
+
+
+/*
+.prediction-history
+{
+    display: grid;
+    gap: var(--size-3);
+    grid-auto-flow: column;
+    grid-auto-columns: 21%;
+
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+}
+*/

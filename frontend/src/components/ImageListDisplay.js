@@ -22,7 +22,7 @@ function ImageListDisplay()
     })
 
     return (
-        <div>
+        <div className='prediction-history'>
             {cardEntries}
         </div>
     )
