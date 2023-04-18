@@ -27,7 +27,6 @@ def getRoutes(request):
         {
             'Endpoint': '/images/create',
             'method': 'POST',
-            #'body': {'image': ""},
             'description': 'Creates an image with data sent in a post request'
         },
         {
@@ -91,10 +90,30 @@ def createImage(request):
 def updateImage(request, pk):
     data = request.data
     image = Image.objects.get(id=pk)
-    serializer = ImageSerializer(instance=image, data=data)
-    if serializer.is_valid():
-        serializer.save()
-    return serializer.data
+    image.image = data['updatedImage']
+    image.save()
+    serializer = ImageSerializer(image, many=False)
+    return Response(serializer.data)
+
+
+
+
+# @api_view(['POST'])
+# def updateImage(request, pk):
+#     data = request.data
+#     try:
+#         image = Image.objects.get(id=pk)
+#     except Image.DoesNotExist:
+#         print('IMAGE DOES NOT EXIST')
+#         return Response({"error": "Image not found"}, status=status.HTTP_404_NOT_FOUND)
+
+#     serializer = ImageSerializer(instance=image, data=data)
+#     if serializer.is_valid():
+#         serializer.save()
+#         return Response(serializer.data)
+#     else:
+#         print('INVALID SERIALIZER UPDATE:', serializer.errors)
+#         return Response(serializer.errors)
 
 
 @api_view(['DELETE'])
