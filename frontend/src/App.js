@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Predict from './components/Predict';
-import {Routes, Route, useNavigate} from 'react-router-dom'
+import {Routes, Route} from 'react-router-dom'
 
 function App()
 {
