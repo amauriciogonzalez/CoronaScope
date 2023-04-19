@@ -40,7 +40,7 @@ function ImageCard(props)
 
     return (
         <div className='image-card'>
-            <img src={domainName + '/api/images/' + props.image.id + '/image'}/>
+            <img src={domainName + '/api/images/' + props.image.id + '/image'} alt={props.image.id}/>
             <div>
                 <div className="update-image">
                     <input

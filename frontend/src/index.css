@@ -50,9 +50,15 @@ nav > h2
     align-items: center;
 }
 
-img
+.predict-page > h4
 {
-    width: 75px;
+    font-size: 30px;
+}
+
+.predict-page > h5
+{
+    font-size: 20px;
+    margin: -10px 0px
 }
 
 .select-image
@@ -76,7 +82,7 @@ img
     height:40px;
     margin-top:-40px;
     opacity:0.5;
-    background-color:#000000;
+    background-color:#007480;
     z-index:0;
     font-size:25px;
     color:#FFFFFF;
@@ -85,6 +91,27 @@ img
     border-radius: 100px;
 }
 
+.image-preview
+{
+    width: 700px;
+    border-radius: 5px;
+}
+
+.submit-and-predict
+{
+    width:400px;
+    height:40px;
+    margin:40px 0px;
+    opacity:0.5;
+    background-color:#007480;
+    z-index:0;
+    font-size:25px;
+    color:#FFFFFF;
+    text-align:center;
+    line-height:40px;
+    border-radius: 100px;
+    border-color: #007480;
+}
 
 .prediction-history
 {

@@ -1,13 +1,23 @@
 import React from "react";
-import {useNavigate} from 'react-router-dom';
 import ImageListDisplay from "./ImageListDisplay";
 
 function Predict()
 {
     let [uploadedImage, setUploadedImage] = React.useState(null)
     let [imagePreview, setImagePreview] = React.useState(null)
+    let [imageList, setImageList] = React.useState([])
 
-    const navigate = useNavigate()
+    React.useEffect(() => {
+        getImages()
+    }, [])
+
+    async function getImages()
+    {
+        await fetch('/api/images/')
+            .then(response => response.json())
+            .then(imageList => setImageList(imageList))
+            .catch(err => console.error(err))
+    }
 
     function handleChange(event)
     {
@@ -58,11 +68,13 @@ function Predict()
                 /><label></label>
                 <div className="overlay-layer">Select Image</div>
             </div>
-            {imagePreview && <img src={imagePreview}/>}
+            {imagePreview && <img className="image-preview" src={imagePreview} alt='uploadedImage'/>}
             {uploadedImage && <button className="submit-and-predict" onClick={createImage}>Submit & Predict</button>}
-            <span>The most recent submitted image is classified under 'normal' with 89% confidence.</span>
-            <h4>Prediction History</h4>
-            <ImageListDisplay/>
+            {imageList && <>
+                <h5>The most recent submitted image is classified under 'normal' with 89% confidence.</h5>
+                <h4>Prediction History</h4>
+                <ImageListDisplay imageList={imageList}/>
+            </>}
         </div>
     )
 }
