@@ -55,6 +55,28 @@ function Predict()
         window.location.reload(false)
     }
 
+    function handleDownload()
+    {
+        // Fetch the zip file from the Django backend
+        fetch('/api/images/sample-images', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/zip', // Set the appropriate MIME type
+            },
+            responseType: 'blob', // Set the response type to blob
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            // Create a download link
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = 'SamplePictures.zip'; // Set the desired download file name
+            downloadLink.click();
+            URL.revokeObjectURL(downloadLink.href); // Clean up the object URL
+        })
+        .catch(error => console.error('Error downloading zip file:', error));
+    }
+
     return (
         <div className="predict-page">
             <h4>Upload a radiograph X-ray image of lungs to detect COVID-19.</h4>
@@ -70,11 +92,12 @@ function Predict()
             </div>
             {imagePreview && <img className="image-preview" src={imagePreview} alt='uploadedImage'/>}
             {uploadedImage && <button className="submit-and-predict" onClick={createImage}>Submit & Predict</button>}
-            {imageList && <>
-                <h5>The most recent submitted image is classified under 'normal' with 89% confidence.</h5>
+            {(imageList.length != 0) && <>
+                <h5>The most recent submitted image is classified under {imageList[0].classification} with {imageList[0].confidence}% confidence.</h5>
                 <h4>Prediction History</h4>
                 <ImageListDisplay imageList={imageList}/>
             </>}
+            <button onClick={handleDownload}>Download Sample Pictures</button>
         </div>
     )
 }

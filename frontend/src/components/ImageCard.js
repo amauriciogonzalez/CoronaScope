@@ -42,6 +42,10 @@ function ImageCard(props)
         <div className='image-card'>
             <img src={domainName + '/api/images/' + props.image.id + '/image'} alt={props.image.id}/>
             <div>
+                <span>{props.image.classification}</span>
+                <span>{props.image.confidence}%</span>
+            </div>
+            <div>
                 <div className="update-image">
                     <input
                         className="update-button"

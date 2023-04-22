@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Image
-#from .utils import getImageList, createImage, getImageUtil, updateImage, deleteImage
+from .ml_models import make_image_predictions
 from django.http import HttpResponse
 from django.conf import settings
 import os
@@ -43,24 +43,6 @@ def getRoutes(request):
     return Response(routes)
 
 
-# @api_view(['GET', 'POST'])
-# def getImages(request):
-#     if request.method == 'GET':
-#         return getImageList(request)
-#     elif request.method == 'POST':
-#         return createImage(request)
-
-
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def getImage(request, pk):
-#     if request.method == 'GET':
-#         return getImageUtil(request, pk)
-#     elif request.method == 'PUT':
-#         return updateImage(request, pk)
-#     elif request.method == 'DELETE':
-#         return deleteImage(request, pk)
-
-
 @api_view(['GET'])
 def getImageList(request):
     images = Image.objects.all().order_by('-updated_date')
@@ -78,9 +60,11 @@ def getImage(request, pk):
 @api_view(['POST'])
 def createImage(request):
     data = request.data
-    print('HEY', data['uploadedImage'])
+    classification, confidence = make_image_predictions(data['uploadedImage'])
     image = Image.objects.create(
-        image=data['uploadedImage']
+        image=data['uploadedImage'],
+        classification=classification,
+        confidence=confidence,
     )
     serializer = ImageSerializer(image, many=False)
     return Response(serializer.data)
@@ -90,36 +74,30 @@ def createImage(request):
 def updateImage(request, pk):
     data = request.data
     image = Image.objects.get(id=pk)
+    old_file_path = os.path.join(settings.MEDIA_ROOT, str(image.image))
+    classification, confidence = make_image_predictions(data['updatedImage'])
     image.image = data['updatedImage']
+    image.classification = classification
+    image.confidence = confidence
     image.save()
+    # Check if the image file exists
+    if os.path.exists(old_file_path):
+        # Delete the image file
+        os.remove(old_file_path)
     serializer = ImageSerializer(image, many=False)
     return Response(serializer.data)
-
-
-
-
-# @api_view(['POST'])
-# def updateImage(request, pk):
-#     data = request.data
-#     try:
-#         image = Image.objects.get(id=pk)
-#     except Image.DoesNotExist:
-#         print('IMAGE DOES NOT EXIST')
-#         return Response({"error": "Image not found"}, status=status.HTTP_404_NOT_FOUND)
-
-#     serializer = ImageSerializer(instance=image, data=data)
-#     if serializer.is_valid():
-#         serializer.save()
-#         return Response(serializer.data)
-#     else:
-#         print('INVALID SERIALIZER UPDATE:', serializer.errors)
-#         return Response(serializer.errors)
 
 
 @api_view(['DELETE'])
 def deleteImage(request, pk):
     image = Image.objects.get(id=pk)
+    file_path = os.path.join(settings.MEDIA_ROOT, str(image.image))
+    # Delete the image from the database
     image.delete()
+    # Check if the image file exists
+    if os.path.exists(file_path):
+        # Delete the image file
+        os.remove(file_path)
     return Response('The image instance was deleted.')
 
 
@@ -127,7 +105,6 @@ def displayImage(request, pk):
     # Set the file path of the image
     image_instance = Image.objects.get(id=pk)
     file_path = os.path.join(settings.MEDIA_ROOT, str(image_instance.image))
-    print(file_path)
 
     # Open the image file in binary mode
     with open(file_path, 'rb') as image_file:
@@ -136,3 +113,13 @@ def displayImage(request, pk):
 
     # Create an HttpResponse with the binary data as the content
     return  HttpResponse(image_data, content_type='image/jpeg')
+
+
+def downloadSampleImages(request):
+    zip_path = os.path.join(settings.MEDIA_ROOT, 'SamplePictures.zip')
+    with open(zip_path, 'rb') as zip_file:
+        # Create an HttpResponse with the zip file as content
+        response = HttpResponse(zip_file, content_type='application/zip')
+        # Set the Content-Disposition header to trigger download
+        response['Content-Disposition'] = 'attachment; filename=SamplePictures.zip'
+        return response
