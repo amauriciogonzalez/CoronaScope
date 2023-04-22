@@ -146,5 +146,15 @@ MEDIA_URL = '/images/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
-#CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
 #CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:8000']
+
+
+# Being logged in as an admin will yield 403 Forbidden errors. Either log out or uncomment
+# below to resolve the issue.
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.TokenAuthentication',
+#     )
+# }
