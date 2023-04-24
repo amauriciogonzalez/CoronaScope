@@ -43,6 +43,19 @@ nav > h2
     cursor: pointer;
 }
 
+.home
+{
+    margin: 100px 400px;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.home-title
+{
+    padding-top: 100px;
+    margin: 0px -100px;
+}
+
 .predict-page
 {
     display: flex;
@@ -82,20 +95,10 @@ nav > h2
 {
     
     width:150px;
-    
     opacity:0;
-
-
     position: relative;
     padding: 6px 0px;
     cursor: pointer;
-
-    /*
-    position:absolute;
-    height:40px;
-    margin-top:-40px;
-    z-index:10;
-    */
 }
 
 .img-classification-confidence
@@ -206,6 +209,7 @@ nav > h2
     text-align:center;
     line-height:40px;
     border-radius: 100px;
+    cursor: pointer;
     box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),
     0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
 }
@@ -240,7 +244,8 @@ nav > h2
     border-radius: 10px;
 }
 
-.download-sample-pictures {
+.download-sample-pictures
+{
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -253,4 +258,4 @@ nav > h2
     border-radius: 100px;
     box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),
     0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
-  }
+}
