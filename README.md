@@ -1,3 +1,6 @@
+# CoronaScope
+A Django and React application that utilizes a convolutional neural network, specifically the Xception model, to classify x-ray images as 'covid', 'normal', or 'viral pneumonia' with an impressive validation accuracy of 93%. It's capable of creating, reading, updating, and deleting previous predictions.
+
 ### Cloning the repository
 
 --> Clone the repository using the command below :
@@ -48,6 +51,8 @@ python manage.py runserver
 #
 
 ### App Preview :
+![Capture](https://user-images.githubusercontent.com/88101535/234070712-04fe4839-679a-420f-a6e0-5822d99c1fd2.PNG)
 
+![Capture](https://user-images.githubusercontent.com/88101535/234070921-691ecd27-423f-4b8b-8b26-cb6eb21d1cec.PNG)
 
 #
