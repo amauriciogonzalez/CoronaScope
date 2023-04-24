@@ -97,7 +97,7 @@ function Predict()
                 <h4>Prediction History</h4>
                 <ImageListDisplay imageList={imageList}/>
             </>}
-            <button onClick={handleDownload}>Download Sample Pictures</button>
+            <button className='download-sample-pictures' onClick={handleDownload}>Download Sample Pictures</button>
         </div>
     )
 }

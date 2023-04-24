@@ -5,6 +5,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     sans-serif;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
+overflow-x: hidden;
 }
 
 code {
@@ -74,14 +75,83 @@ nav > h2
     margin-top:-40px;
     z-index:10;
     opacity:0;
+    cursor: pointer;
 }
+
+.update-button
+{
+    
+    width:150px;
+    
+    opacity:0;
+
+
+    position: relative;
+    padding: 6px 0px;
+    cursor: pointer;
+
+    /*
+    position:absolute;
+    height:40px;
+    margin-top:-40px;
+    z-index:10;
+    */
+}
+
+.img-classification-confidence
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.classification-confidence
+{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: auto;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0px 10px;
+    width: 100px;
+    color: white;
+}
+
+.classification-confidence > span
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.card-buttons
+{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    margin: 20px 0px;
+}
+
+.card-buttons > div
+{
+    margin: auto;
+    text-align: center;
+}
+
+.card-buttons > span
+{
+    margin: auto;
+    text-align: center;
+    background-color:#fa3d3d;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
 
 .overlay-layer
 {
     width:400px;
     height:40px;
     margin-top:-40px;
-    opacity:0.5;
     background-color:#007480;
     z-index:0;
     font-size:25px;
@@ -89,6 +159,34 @@ nav > h2
     text-align:center;
     line-height:40px;
     border-radius: 100px;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
+.update-overlay
+{
+    width:150px;
+    background-color:#007480;
+    font-size:25px;
+    color:#FFFFFF;
+    border-radius: 100px;
+    cursor: pointer;
+
+    margin-top: -30px;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
+.delete-button
+{
+    width:150px;
+    
+    color:#FFFFFF;
+    font-size:25px;
+    cursor: pointer;
+    border-radius: 100px;
+    top:2px;
+    position: relative;
 }
 
 .image-preview
@@ -102,46 +200,57 @@ nav > h2
     width:400px;
     height:40px;
     margin:40px 0px;
-    opacity:0.5;
     background-color:#007480;
-    z-index:0;
     font-size:25px;
     color:#FFFFFF;
     text-align:center;
     line-height:40px;
     border-radius: 100px;
-    border-color: #007480;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
 }
 
 .prediction-history
 {
+    width: 100%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    justify-content: center; /* add this property to center the components horizontally */
+    white-space: normal;
     gap: 20px;
-    overflow-x: scroll;
+    overflow-x: auto;
+    margin-left: auto; /* add this property to center the components horizontally */
+    margin-right: auto; /* add this property to center the components horizontally */
 }
 
 .image-card
 {
-    background-color: rgb(173, 173, 173);
+    background-color: rgb(129, 128, 128);
+    border-radius: 10px;
+    flex: 0 0 auto;
+    white-space: wrap;
+    margin: 0px 10px;
+    padding: 5px 5px;
+    box-shadow: 10px 10px 50px -11px rgba(0,0,0,0.42);
 }
 
-.image-card > img
+.image-card-img
 {
-    width: 100px;
+    width: 200px;
     aspect-ratio: 1 / 1;
+    border-radius: 10px;
 }
 
-
-/*
-.prediction-history
-{
-    display: grid;
-    gap: var(--size-3);
-    grid-auto-flow: column;
-    grid-auto-columns: 21%;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-}
-*/
+.download-sample-pictures {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width:400px;
+    cursor: pointer;
+    background-color:#007480;
+    font-size:25px;
+    color:#FFFFFF;
+    text-align:center;
+    border-radius: 100px;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+  }

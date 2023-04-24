@@ -29,23 +29,28 @@ function ImageCard(props)
 
     async function deleteImage()
     {
-        await fetch(domainName + '/api/images/' + props.image.id + '/delete', {
-            method: 'DELETE',
-        })
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
-
-        window.location.reload(false)
+        if (window.confirm('Are you sure you wish to delete this entry?'))
+        {
+            await fetch(domainName + '/api/images/' + props.image.id + '/delete', {
+                method: 'DELETE',
+            })
+            .then(response => console.log(response))
+            .catch(error => console.log(error))
+    
+            window.location.reload(false)
+        }
     }
 
     return (
         <div className='image-card'>
-            <img src={domainName + '/api/images/' + props.image.id + '/image'} alt={props.image.id}/>
-            <div>
-                <span>{props.image.classification}</span>
-                <span>{props.image.confidence}%</span>
+            <div className='img-classification-confidence'>
+                <img className='image-card-img' src={domainName + '/api/images/' + props.image.id + '/image'} alt={props.image.id}/>
+                <div className='classification-confidence'>
+                    <span>{props.image.classification}</span>
+                    <span>{props.image.confidence}%</span>
+                </div>
             </div>
-            <div>
+            <div className='card-buttons'>
                 <div className="update-image">
                     <input
                         className="update-button"
@@ -56,7 +61,7 @@ function ImageCard(props)
                     /><label></label>
                     <div className="update-overlay">Update</div>
                 </div>
-                <span onClick={deleteImage}>Delete</span>
+                <span className='delete-button' onClick={deleteImage}>Delete</span>
             </div>
         </div>
     )
