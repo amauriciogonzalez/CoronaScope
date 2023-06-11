@@ -41,7 +41,7 @@ pip install -r requirements.txt
 
 ### Running the App
 
---> To run the Notes App, we use :
+--> To run the App, we use :
 ```bash
 python manage.py runserver
 ```
