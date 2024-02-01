@@ -29,7 +29,3 @@ def make_image_predictions(img_path):
     return classification, confidence
 
 
-# classification = models.CharField(max_length=30, null=True)
-# confidence = models.IntegerField(null=True)
-
-#classification, confidence = make_image_predictions(data['uploadedImage'])
