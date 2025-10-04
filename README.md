@@ -1,5 +1,14 @@
-# CoronaScope
-A Django and React application that utilizes a convolutional neural network, specifically the Xception model, to classify x-ray images as 'covid', 'normal', or 'viral pneumonia' with a validation accuracy of 93%. It's capable of creating, reading, updating, and deleting previous predictions.
+# CoronaScope: COVID-19 Chest X-Ray Classification Web App
+
+A **full-stack React + Django application** using a TensorFlow CNN (Xception backbone) to classify X-ray images as COVID, Normal, or Viral Pneumonia with **93% validation accuracy**.
+
+## Highlights
+
+* Real-time image classification with CRUD-based prediction management.
+* RESTful API backend with serialized model inference.
+* Built using **TensorFlow, Django, React, and SQLite**.
+
+## Setup
 
 ### Cloning the repository
 
@@ -37,9 +46,7 @@ pip install -r requirements.txt
 
 ```
 
-#
-
-### Running the App
+## Running the App
 
 --> To run the App, we use :
 ```bash
@@ -48,9 +55,9 @@ python manage.py runserver
 
 > ⚠ Then, the development server will be started at http://127.0.0.1:8000/
 
-#
 
-### App Preview :
+
+## Preview
 ![Capture](https://user-images.githubusercontent.com/88101535/234070712-04fe4839-679a-420f-a6e0-5822d99c1fd2.PNG)
 
 ![Capture](https://user-images.githubusercontent.com/88101535/234070921-691ecd27-423f-4b8b-8b26-cb6eb21d1cec.PNG)
